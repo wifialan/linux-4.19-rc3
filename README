@@ -2,6 +2,14 @@ Linux kernel
 
 This kernel is for s3c2440.jz2440-v3
 
+===========================================
+
+//.config is useful in this project now
+
+make ARCH=arm CROSS_COMPILE=/opt/FriendlyARM/toolschain/4.9.4/bin/arm-linux-gnueabi- uImage -j8
+
+==========================================
+
 ============
 
 There are several guides for kernel developers and users. These guides can
