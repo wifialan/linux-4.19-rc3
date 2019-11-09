@@ -1,0 +1,80 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * SAMSUNG SMDK2440 board device tree source
+ *
+ * Copyright (c) 2018 weidongshan@qq.com
+ * dtc -I dtb -O dts -o jz2440.dts jz2440.dtb
+ */
+ 
+#define S3C2410_GPA(_nr)	((0<<16) + (_nr))
+#define S3C2410_GPB(_nr)	((1<<16) + (_nr))
+#define S3C2410_GPC(_nr)	((2<<16) + (_nr))
+#define S3C2410_GPD(_nr)	((3<<16) + (_nr))
+#define S3C2410_GPE(_nr)	((4<<16) + (_nr))
+#define S3C2410_GPF(_nr)	((5<<16) + (_nr))
+#define S3C2410_GPG(_nr)	((6<<16) + (_nr))
+#define S3C2410_GPH(_nr)	((7<<16) + (_nr))
+#define S3C2410_GPJ(_nr)	((8<<16) + (_nr))
+#define S3C2410_GPK(_nr)	((9<<16) + (_nr))
+#define S3C2410_GPL(_nr)	((10<<16) + (_nr))
+#define S3C2410_GPM(_nr)	((11<<16) + (_nr))
+
+/dts-v1/;
+
+
+/ {
+	model = "SMDK24440";
+	compatible = "samsung,smdk2440";
+
+	#address-cells = <1>;
+	#size-cells = <1>;
+	interrupt-parent = <&intc>;
+
+    intc:interrupt-controller@4a000000 {
+            compatible = "samsung,s3c2410-irq";
+            reg = <0x4a000000 0x100>;
+            interrupt-controller;
+            #interrupt-cells = <4>;
+    };
+    
+    pinctrl_0: pinctrl@56000000 {
+			compatible = "samsung,s3c2440-pinctrl";
+            reg = <0x56000000 0x1000>;
+
+            wakeup-interrupt-controller {
+                    compatible = "samsung,s3c2410-wakeup-eint";
+                    interrupts = <0 0 0 3>,
+                                 <0 0 1 3>,
+                                 <0 0 2 3>,
+                                 <0 0 3 3>,
+                                 <0 0 4 4>,
+                                 <0 0 5 4>;
+            };
+    };
+		
+	memory {  /* /memory */
+		device_type = "memory";
+		reg =  <0x30000000 0x4000000 0 4096>;		
+	};
+
+	
+/*
+	cpus {
+		cpu {
+			compatible = "arm,arm926ej-s";
+		};
+	};
+*/	
+	chosen {
+		bootargs = "noinitrd root=/dev/mtdblock4 rw init=/linuxrc console=ttySAC0,115200";
+	};
+
+	
+	led {
+		compatible = "jz2440_led";
+		pin = <S3C2410_GPF(5)>;
+	};
+};
+
+#include "s3c2440-pinctrl.dtsi"
+
