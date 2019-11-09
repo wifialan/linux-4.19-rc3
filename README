@@ -1,4 +1,7 @@
 Linux kernel
+
+This kernel is for s3c2440.jz2440-v3
+
 ============
 
 There are several guides for kernel developers and users. These guides can
